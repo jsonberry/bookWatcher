@@ -1,6 +1,21 @@
 {
+  "scripts": {
+    "transpile.watch": "tsc -w",
+    "transpile": "tsc",
+    "build.live": "nodemon ./lib/index",
+    "start": "yarn transpile.watch & yarn build.live"
+  },
+  "main": "lib/index",
   "dependencies": {
+    "@types/express": "^4.16.0",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^10.5.2",
+    "@types/sqlite3": "^3.1.3",
+    "express": "^4.16.3",
     "lodash": "^4.17.4",
-    "moment": "^2.18.1"
+    "moment": "^2.18.1",
+    "nodemon": "^1.17.5",
+    "sqlite3": "^4.0.1",
+    "typescript": "^2.9.2"
   }
 }
