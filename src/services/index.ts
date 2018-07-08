@@ -21,7 +21,7 @@ export function getAllBooks(): Promise<Book[]> {
     });
 }
 
-export function getBook($rowid: number): Promise<Book> {
+export function getBook($rowid: number): Promise<Book[]> {
     return new Promise((resolve, reject) => {
         db.get(
             'SELECT rowid, * FROM Books WHERE rowid=$rowid',
