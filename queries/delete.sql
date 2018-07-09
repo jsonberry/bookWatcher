@@ -1,0 +1,2 @@
+DELETE FROM Books WHERE rowid=11;
+

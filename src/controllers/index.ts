@@ -1,11 +1,12 @@
+import { NextFunction, Request, Response } from 'express';
+import * as models from '../models';
 import * as services from '../services';
-import { Request, Response, NextFunction } from 'express';
 
 export async function getBooks(
     req: Request,
     res: Response,
     next: NextFunction
-) {
+): Promise<Response> {
     if (req.query.author) {
         try {
             const data = await services.getBooksByAuthor(req.query.author);
@@ -47,7 +48,11 @@ export async function getBooks(
     }
 }
 
-export async function getBook(req: Request, res: Response, next: NextFunction) {
+export async function getBook(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<Response> {
     try {
         const data = await services.getBook(req.params.id);
         return data.length
@@ -56,14 +61,38 @@ export async function getBook(req: Request, res: Response, next: NextFunction) {
                   data,
                   message: `Successfully retreived book ID: ${req.params.id}`
               })
-            : res
-                  .status(404)
-                  .json({
-                      status: 404,
-                      data,
-                      message: `No book found with ID: ${req.params.id}`
-                  });
+            : res.status(404).json({
+                  status: 404,
+                  data,
+                  message: `No book found with ID: ${req.params.id}`
+              });
     } catch (error) {
         return res.status(400).json({ status: 400, message: error.message });
+    }
+}
+
+export async function createBook(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<Response> {
+    const book: models.Book = { ...req.body };
+    const values: any[] = Object.keys(book).map((el) => book[el]);
+    const placeholders = Object.keys(book).map(() => '?').join(',');
+
+    try {
+        const rowId = await services.createBook(values, placeholders);
+        if (rowId) {
+            return res.status(200).json({
+                status: 200,
+                data: {
+                    ...req.body,
+                    rowId
+                },
+                message: `Successfully added ${req.body.title}`
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({ status: 500, message: error });
     }
 }
