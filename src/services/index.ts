@@ -2,12 +2,32 @@ import * as models from '../models';
 import { db } from '../store';
 import * as utils from '../utils';
 
-export function getBooksByAuthor($author: string): Promise<models.Book[]> {
+// TODO type this return
+export function createBook(values: any[], placeholders: string) {
     return new Promise((resolve, reject) => {
-        db.all(
-            'SELECT rowid, * FROM Books WHERE author=$author',
-            { $author },
-            utils.serviceResolver.bind(this, resolve, reject)
+        db.run(
+            `INSERT INTO Books (
+                author,
+                dueDate,
+                finishedDate,
+                pages,
+                place,
+                startDate,
+                status,
+                title
+            )
+             VALUES (${placeholders});
+            `,
+            values,
+            function(error) {
+                if (error) {
+                    reject(error.message);
+                }
+
+                if (this && this.lastID) {
+                    resolve(this.lastID);
+                }
+            }
         );
     });
 }
@@ -31,30 +51,40 @@ export function getBook($rowid: number): Promise<models.Book[]> {
     });
 }
 
-export function createBook(values: any[], placeholders) {
-    console.log(values);
+export function getBooksByAuthor($author: string): Promise<models.Book[]> {
+    return new Promise((resolve, reject) => {
+        db.all(
+            'SELECT rowid, * FROM Books WHERE author=$author',
+            { $author },
+            utils.serviceResolver.bind(this, resolve, reject)
+        );
+    });
+}
+
+// TODO type this return
+export async function updateBook(values) {
     return new Promise((resolve, reject) => {
         db.run(
-            `INSERT INTO Books (
-                author,
-                dueDate,
-                finishedDate,
-                pages,
-                place,
-                startDate,
-                status,
-                title
-            )
-             VALUES (${placeholders});
+            `UPDATE Books
+                SET
+                  author = $author,
+                  dueDate = $dueDate,
+                  finishedDate = $finishedDate,
+                  pages = $pages,
+                  place = $place,
+                  startDate = $startDate,
+                  status = $status,
+                  title = $title
+                WHERE rowid = $rowid
             `,
             values,
-            function (error) {
+            function(error) {
                 if (error) {
                     reject(error.message);
                 }
 
-                if (this && this.lastID) {
-                    resolve(this.lastID);
+                if (this && this.changes) {
+                    resolve(this.changes);
                 }
             }
         );
