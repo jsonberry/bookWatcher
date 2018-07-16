@@ -3,6 +3,33 @@ import * as models from '../models';
 import * as services from '../services';
 import * as utils from '../utils';
 
+export async function createBook(
+    req: Request,
+    res: Response
+): Promise<Response> {
+    const book: models.Book = { ...req.body };
+    const values: any[] = Object.keys(book).map(el => book[el]);
+    const placeholders = Object.keys(book)
+        .map(() => '?')
+        .join(',');
+
+    try {
+        const rowId = await services.createBook(values, placeholders);
+        if (rowId) {
+            return res.status(200).json({
+                status: 200,
+                data: {
+                    ...req.body,
+                    rowId
+                },
+                message: `Successfully added ${req.body.title}`
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({ status: 500, message: error });
+    }
+}
+
 export async function getBooks(req: Request, res: Response): Promise<Response> {
     if (req.query.author) {
         try {
@@ -41,14 +68,14 @@ export async function getBooks(req: Request, res: Response): Promise<Response> {
                   message: 'No books found'
               });
     } catch (error) {
-        return res.status(400).json({ status: 400, message: error.message });
+        return res.status(500).json({ status: 500, message: error.message });
     }
 }
 
 export async function getBook(req: Request, res: Response): Promise<Response> {
     try {
         const data = await services.getBook(req.params.id);
-        return data.length
+        return data
             ? res.status(200).json({
                   status: 200,
                   data,
@@ -60,34 +87,7 @@ export async function getBook(req: Request, res: Response): Promise<Response> {
                   message: `No book found with ID: ${req.params.id}`
               });
     } catch (error) {
-        return res.status(400).json({ status: 400, message: error.message });
-    }
-}
-
-export async function createBook(
-    req: Request,
-    res: Response
-): Promise<Response> {
-    const book: models.Book = { ...req.body };
-    const values: any[] = Object.keys(book).map(el => book[el]);
-    const placeholders = Object.keys(book)
-        .map(() => '?')
-        .join(',');
-
-    try {
-        const rowId = await services.createBook(values, placeholders);
-        if (rowId) {
-            return res.status(200).json({
-                status: 200,
-                data: {
-                    ...req.body,
-                    rowId
-                },
-                message: `Successfully added ${req.body.title}`
-            });
-        }
-    } catch (error) {
-        return res.status(500).json({ status: 500, message: error });
+        return res.status(500).json({ status: 500, message: error.message });
     }
 }
 
@@ -95,7 +95,7 @@ export async function updateBook(
     req: Request,
     res: Response
 ): Promise<Response> {
-    if (utils.isReqBodyEmpty) {
+    if (utils.isReqBodyEmpty(req.body)) {
         return res
             .status(400)
             .json({ status: 400, message: 'Body required for update' });
@@ -112,7 +112,7 @@ export async function updateBook(
             });
         }
     } catch (error) {
-        return res.status(400).json({ status: 400, message: error.message });
+        return res.status(500).json({ status: 500, message: error.message });
     }
 
     try {
@@ -138,6 +138,41 @@ export async function updateBook(
                   status: 500,
                   data,
                   message: `Update seemed to fail...`
+              });
+    } catch (error) {
+        return res.status(500).json({ status: 500, message: error });
+    }
+}
+
+export async function deleteBook(
+    req: Request,
+    res: Response
+): Promise<Response> {
+    try {
+        const data = await services.getBook(req.params.id);
+        if (!data) {
+            return res.status(404).json({
+                status: 404,
+                data,
+                message: `No book found with ID: ${req.params.id}`
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({ status: 500, message: error.message });
+    }
+
+    try {
+        const data = await services.deleteBook(req.params.id);
+        return data
+            ? res.status(200).json({
+                  status: 200,
+                  data,
+                  message: `Successfully deleted book ID: ${req.params.id}`
+              })
+            : res.status(404).json({
+                  status: 404,
+                  data,
+                  message: `No book found with ID: ${req.params.id}`
               });
     } catch (error) {
         return res.status(500).json({ status: 500, message: error });

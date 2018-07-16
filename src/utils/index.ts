@@ -27,6 +27,6 @@ export function mapBookRelations(book) {
     }
 }
 
-export function isReqBodyEmpty(req) {
-    return !!Object.keys(req).length;
+export function isReqBodyEmpty(body) {
+    return !Object.keys(body).length;
 }

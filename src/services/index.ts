@@ -35,7 +35,9 @@ export function createBook(values: any[], placeholders: string) {
 export function getAllBooks(): Promise<models.Book[]> {
     return new Promise((resolve, reject) => {
         db.all(
-            'SELECT rowid, * FROM Books',
+            `SELECT rowid, *
+                FROM Books;
+            `,
             utils.serviceResolver.bind(this, resolve, reject)
         );
     });
@@ -44,9 +46,22 @@ export function getAllBooks(): Promise<models.Book[]> {
 export function getBook($rowid: number): Promise<models.Book[]> {
     return new Promise((resolve, reject) => {
         db.get(
-            'SELECT rowid, * FROM Books WHERE rowid=$rowid',
+            `SELECT rowid, *
+                FROM Books
+                WHERE rowid=$rowid;
+            `,
             { $rowid },
-            utils.serviceResolver.bind(this, resolve, reject)
+            (err, book) => {
+                if (err) {
+                    reject(err.message);
+                }
+
+                if (book) {
+                    resolve(book);
+                } else {
+                    resolve(null);
+                }
+            }
         );
     });
 }
@@ -54,7 +69,10 @@ export function getBook($rowid: number): Promise<models.Book[]> {
 export function getBooksByAuthor($author: string): Promise<models.Book[]> {
     return new Promise((resolve, reject) => {
         db.all(
-            'SELECT rowid, * FROM Books WHERE author=$author',
+            `SELECT rowid, *
+                FROM Books
+                WHERE author = $author;
+            `,
             { $author },
             utils.serviceResolver.bind(this, resolve, reject)
         );
@@ -89,4 +107,16 @@ export async function updateBook(values) {
             }
         );
     });
+}
+
+export async function deleteBook($rowid) {
+    return new Promise((resolve, reject) => {
+        db.run(
+            `DELETE FROM Books
+                WHERE rowid = $rowid;
+            `,
+            $rowid,
+            utils.serviceResolver.bind(this, resolve, reject)
+        )
+    })
 }
