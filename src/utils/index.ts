@@ -1,6 +1,6 @@
-import { Book } from '../models';
+import * as models from '../models';
 
-export function serviceResolver(resolve, reject, err: Error, rows: Book[]): void {
+export function selectManyResolver(resolve, reject, err: Error, rows: models.Book[]): void  {
     if (err) {
         reject(err.message);
     }
@@ -9,6 +9,18 @@ export function serviceResolver(resolve, reject, err: Error, rows: Book[]): void
         resolve(rows);
     } else {
         resolve([]);
+    }
+}
+
+export function selectOneResolver(resolve, reject, err: Error, book: models.Book): void {
+    if (err) {
+        reject(err.message);
+    }
+
+    if (book) {
+        resolve(book);
+    } else {
+        resolve(null);
     }
 }
 
@@ -28,5 +40,5 @@ export function mapBookRelations(book) {
 }
 
 export function isReqBodyEmpty(body) {
-    return !Object.keys(body).length;
+    return !!!Object.keys(body).length;
 }
