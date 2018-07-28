@@ -1,0 +1,27 @@
+{
+  "npmScope": "web",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "book-watcher": {
+      "tags": []
+    },
+    "book-watcher-e2e": {
+      "tags": []
+    },
+    "grey-worm-book": {
+      "tags": []
+    },
+    "grey-worm-collection": {
+      "tags": []
+    },
+    "grey-worm-book-service": {
+      "tags": []
+    }
+  }
+}

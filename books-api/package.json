@@ -2,7 +2,7 @@
   "scripts": {
     "transpile.watch": "tsc -w",
     "transpile": "tsc",
-    "build.live": "nodemon ./lib/index",
+    "build.live": "nodemon ./dist/index",
     "start": "yarn transpile.watch & yarn build.live"
   },
   "main": "lib/index",

@@ -1,0 +1,40 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@web/mylib": [
+        "libs/mylib/src/index.ts"
+      ],
+      "@web/foo-lib": [
+        "libs/foo-lib/src/index.ts"
+      ],
+      "@web/grey-worm/book": [
+        "libs/grey-worm/book/src/index.ts"
+      ],
+      "@web/grey-worm/collection": [
+        "libs/grey-worm/collection/src/index.ts"
+      ],
+      "@web/grey-worm/book-service": [
+        "libs/grey-worm/book-service/src/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}
