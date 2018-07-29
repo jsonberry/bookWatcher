@@ -1,3 +1,7 @@
-<p>
-  book works!
-</p>
+<article>
+    <h1>{{book.title}}</h1>
+    <p>By: {{book.author}}</p>
+    <p>Pages: {{book.pages}}</p>
+    <p>Status: {{book.status}}</p>
+    <p>Date Completed: {{book.finishedDate | date:'fullDate'}}</p>
+</article>

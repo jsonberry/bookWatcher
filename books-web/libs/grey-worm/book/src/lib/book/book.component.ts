@@ -1,8 +1,11 @@
-import {Component} from '@angular/core'
+import {Component, Input} from '@angular/core'
+import { Book } from 'books-models'
 
 @Component({
-    selector: 'web-book',
+    selector: 'books-web-book',
     templateUrl: './book.component.html',
     styleUrls: ['./book.component.css'],
 })
-export class BookComponent {}
+export class BookComponent {
+    @Input() public book: Book
+}
