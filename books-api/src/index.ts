@@ -1,13 +1,12 @@
+import express from 'express'
+import cors from 'cors'
+import bodyParser from 'body-parser'
+import * as routes from './routes'
 
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import * as routes from './routes';
+const app = express()
 
-const app = express();
-
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors())
+app.use(bodyParser.json())
 app.use('/api', routes.api)
 
-app.listen(3000);
+app.listen(3000)

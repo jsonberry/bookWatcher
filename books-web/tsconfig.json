@@ -16,21 +16,18 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@web/mylib": [
-        "libs/mylib/src/index.ts"
-      ],
-      "@web/foo-lib": [
-        "libs/foo-lib/src/index.ts"
-      ],
-      "@web/grey-worm/book": [
+      "@books-web/grey-worm/book": [
         "libs/grey-worm/book/src/index.ts"
       ],
-      "@web/grey-worm/collection": [
+      "@books-web/grey-worm/books": [
+        "libs/grey-worm/books/src/index.ts"
+      ],
+      "@books-web/grey-worm/collection": [
         "libs/grey-worm/collection/src/index.ts"
       ],
-      "@web/grey-worm/book-service": [
+      "@books-web/grey-worm/book-service": [
         "libs/grey-worm/book-service/src/index.ts"
-      ]
+      ],
     }
   },
   "exclude": [
