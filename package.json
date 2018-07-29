@@ -1,0 +1,22 @@
+{
+  "private": true,
+    "workspaces": [
+      "books-api",
+      "books-db",
+      "books-models",
+      "books-web"
+    ],
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "ngrx-store-freeze": "0.2.2",
+    "rxjs-compat": "6.0.0",
+    "rxjs": "6.0.0",
+    "typescript": "2.7.2"
+  },
+  "devDependencies": {
+    "@types/moment": "^2.13.0",
+    "prettier": "1.10.2",
+    "tslint": "~5.9.1"
+  }
+}

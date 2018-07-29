@@ -1,6 +1,6 @@
-import * as models from '../models';
-import { db } from '../store';
-import * as utils from '../utils';
+import * as models from 'books-models'
+import {db} from '../store'
+import * as utils from '../utils'
 
 // TODO type this return
 export function createBook(values: any[], placeholders: string) {
@@ -21,15 +21,15 @@ export function createBook(values: any[], placeholders: string) {
             values,
             function(err: Error): void {
                 if (err) {
-                    reject(err.message);
+                    reject(err.message)
                 }
 
                 if (this && this.lastID) {
-                    resolve(this.lastID);
+                    resolve(this.lastID)
                 }
-            }
-        );
-    });
+            },
+        )
+    })
 }
 
 export function getAllBooks(): Promise<models.Book[]> {
@@ -38,9 +38,9 @@ export function getAllBooks(): Promise<models.Book[]> {
             `SELECT rowid, *
                 FROM Books;
             `,
-            utils.selectManyResolver.bind(this, resolve, reject)
-        );
-    });
+            utils.selectManyResolver.bind(this, resolve, reject),
+        )
+    })
 }
 
 export function getBook($rowid: number): Promise<models.Book> {
@@ -50,10 +50,10 @@ export function getBook($rowid: number): Promise<models.Book> {
                 FROM Books
                 WHERE rowid=$rowid;
             `,
-            { $rowid },
-            utils.selectOneResolver.bind(this, resolve, reject)
-        );
-    });
+            {$rowid},
+            utils.selectOneResolver.bind(this, resolve, reject),
+        )
+    })
 }
 
 export function getBooksByAuthor($author: string): Promise<models.Book[]> {
@@ -63,10 +63,10 @@ export function getBooksByAuthor($author: string): Promise<models.Book[]> {
                 FROM Books
                 WHERE author = $author;
             `,
-            { $author },
-            utils.selectManyResolver.bind(this, resolve, reject)
-        );
-    });
+            {$author},
+            utils.selectManyResolver.bind(this, resolve, reject),
+        )
+    })
 }
 
 // TODO type this return
@@ -86,17 +86,17 @@ export async function updateBook(values) {
                 WHERE rowid = $rowid
             `,
             values,
-            function (err: Error): void {
+            function(err: Error): void {
                 if (err) {
-                    reject(err.message);
+                    reject(err.message)
                 }
 
                 if (this && this.changes) {
-                    resolve(this.changes);
+                    resolve(this.changes)
                 }
-            }
-        );
-    });
+            },
+        )
+    })
 }
 
 export async function deleteBook($rowid) {
@@ -106,15 +106,15 @@ export async function deleteBook($rowid) {
                 WHERE rowid = $rowid;
             `,
             $rowid,
-            function (err: Error): void {
+            function(err: Error): void {
                 if (err) {
-                    reject(err.message);
+                    reject(err.message)
                 }
 
                 if (this && this.changes) {
-                    resolve(this.changes);
+                    resolve(this.changes)
                 }
-            }
+            },
         )
     })
 }

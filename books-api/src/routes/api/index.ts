@@ -1,8 +1,8 @@
-import { Router } from 'express';
-import { router as books } from './books.route';
+import {Router} from 'express'
+import {router as books} from './books.route'
 
-const api = Router();
+const api = Router()
 
-api.use('/books', books);
+api.use('/books', books)
 
-export { api };
+export {api}

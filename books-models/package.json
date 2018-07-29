@@ -1,0 +1,12 @@
+{
+  "name": "books-models",
+  "version": "1.0.0-alpha.01",
+  "author": "Jason Awbrey",
+  "license": "MIT",
+  "scripts": {
+    "build.watch": "tsc -w",
+    "build": "tsc"
+  },
+  "main": "dist/index",
+  "dependencies": {}
+}

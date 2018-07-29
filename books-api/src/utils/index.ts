@@ -1,31 +1,51 @@
-import * as models from '../models';
+import * as models from 'books-models'
 
-export function selectManyResolver(resolve, reject, err: Error, rows: models.Book[]): void  {
+export function selectManyResolver(
+    resolve,
+    reject,
+    err: Error,
+    rows: models.Book[],
+): void {
     if (err) {
-        reject(err.message);
+        reject(err.message)
     }
 
     if (rows) {
-        resolve(rows);
+        resolve(rows)
     } else {
-        resolve([]);
+        resolve([])
     }
 }
 
-export function selectOneResolver(resolve, reject, err: Error, book: models.Book): void {
+export function selectOneResolver(
+    resolve,
+    reject,
+    err: Error,
+    book: models.Book,
+): void {
     if (err) {
-        reject(err.message);
+        reject(err.message)
     }
 
     if (book) {
-        resolve(book);
+        resolve(book)
     } else {
-        resolve(null);
+        resolve(null)
     }
 }
 
 export function mapBookRelations(book) {
-    const {author, dueDate, finishedDate, pages, place, rowid, startDate, status, title} = book;
+    const {
+        author,
+        dueDate,
+        finishedDate,
+        pages,
+        place,
+        rowid,
+        startDate,
+        status,
+        title,
+    } = book
     return {
         $author: author,
         $dueDate: dueDate,
@@ -35,10 +55,26 @@ export function mapBookRelations(book) {
         $rowid: rowid,
         $startDate: startDate,
         $status: status,
-        $title: title
+        $title: title,
     }
 }
 
 export function isReqBodyEmpty(body) {
-    return !!!Object.keys(body).length;
+    return !!!Object.keys(body).length
 }
+
+export function GenerateGenericResponse<T>(
+    status: number,
+    data: T,
+    message: string,
+): models.GenericResponse<T> {
+    return {
+        status,
+        data,
+        message,
+    }
+}
+
+export const GenerateGetBooksResponse: models.GenericGenerationResponse<
+    models.Book[]
+> = GenerateGenericResponse
