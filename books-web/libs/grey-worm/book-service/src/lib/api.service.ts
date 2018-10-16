@@ -13,7 +13,7 @@ export class ApiService {
         return this.http.get<models.GenericResponse<models.Book[]>>('/api/books')
     }
 
-    public getBooksByAuthor(author: string): Observable<HttpResponse<any>> {
+    public getBooksByAuthor(author: string): Observable<HttpResponse<models.Book[]>> {
         return this.http.get<any>('/api/books', {
             params: {
                 author,

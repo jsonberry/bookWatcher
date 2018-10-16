@@ -23,8 +23,9 @@ export const getBooksTotal = createSelector(
 )
 
 export const BooksQuery = {
-    getBooksIds,
-    getBookEntities,
     getAllBooks,
+    getBookEntities,
+    getBooksIds,
+    getBooksState,
     getBooksTotal,
 }

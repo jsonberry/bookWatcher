@@ -9,12 +9,11 @@ import {Book} from 'books-models'
     styleUrls: ['./collection.component.css'],
 })
 export class CollectionComponent implements OnInit {
-    public books$: Observable<Book[]>
+    public books$: Observable<Book[]> = this.booksFacade.allBooks$;
 
     constructor(private booksFacade: BooksFacade) {}
 
     ngOnInit() {
         this.booksFacade.loadAll()
-        this.books$ = this.booksFacade.allBooks$
     }
 }
